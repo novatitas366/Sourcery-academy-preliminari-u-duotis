@@ -1,41 +1,49 @@
 public class Main {
 
     public static String compress(String input){
+        StringBuilder output = new StringBuilder();
         if(input.isEmpty()){
             return "";
         }
-        String output = "";
-        Integer charnum = 0;
+        int charnum = 0;
         char presentSymbol;
         char pastSymbol=' ';
         for(int i = 0; i< input.length(); i++){
             presentSymbol = input.charAt(i);
             if(presentSymbol != pastSymbol && pastSymbol != ' '){
-                output+=pastSymbol+charnum.toString();
+                output.append(pastSymbol).append(charnum);
                 charnum=0;
             }
             charnum++;
             pastSymbol = presentSymbol;
         }
-        output += pastSymbol + charnum.toString();
-        return output;
+        output.append(pastSymbol).append(charnum);
+        return output.toString();
     }
 
     public static String decompress(String input){
-        String output = "";
+        StringBuilder output = new StringBuilder();
         if(input.isEmpty()){
             return "";
         }
-        for(int i = 0; i<input.length()-1; i+=2){
-            int j = i+1;
-            String symb = Character.toString(input.charAt(i)).repeat(Integer.parseInt(Character.toString(input.charAt(j))));
-            output += symb;
+        for(int i = 0, j=i+1; i<input.length()-1; i=j){
+            StringBuilder num = new StringBuilder();
+            j = i+1;
+            while(input.charAt(j) >= 48 && input.charAt(j) <=57){
+                num.append(input.charAt(j));
+                j++;
+                if(input.length() == j){
+                    break;
+                }
+            }
+            String symb = Character.toString(input.charAt(i)).repeat(Integer.parseInt(num.toString()));
+            output.append(symb);
         }
-        return output;
+        return output.toString();
     }
 
     public static void main(String[] args) {
-        System.out.println(compress(""));
-        System.out.println(decompress("a11b3"));
+        System.out.println(compress("aaaabbb"));
+        System.out.println(decompress("a4b3"));
     }
 }

@@ -2,7 +2,7 @@
 
 public class Main {
     // This method compresses a string by replacing consecutive repeating 
-    // characters with the character followed by the count of its occurrences.
+    // characters with the character and the count of its occurrences to the right.
     public static String compress(String input){
         StringBuilder output = new StringBuilder();
         if(input.isEmpty()){
